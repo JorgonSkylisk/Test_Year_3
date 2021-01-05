@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+
 
 [RequireComponent(typeof(CharacterController), typeof(PlayerInputHandler), typeof(AudioSource))]
 public class PlayerCharacterController : MonoBehaviour
@@ -118,6 +120,10 @@ public class PlayerCharacterController : MonoBehaviour
     const float k_JumpGroundingPreventionTime = 0.2f;
     const float k_GroundCheckDistanceInAir = 0.07f;
 
+    public string firstSceneName = "MainScene";
+    public string secondSceneName = "SecondaryScene";
+    public string thirdSceneName = "TertiaryScene";
+
     void Start()
     {
         // fetch components on the same gameObject
@@ -194,7 +200,19 @@ public class PlayerCharacterController : MonoBehaviour
     {
         // Tell the weapons manager to switch to a non-existing weapon in order to lower the weapon
         m_WeaponsManager.SwitchToWeaponIndex(-1, true);
-        
+
+        if (SceneManager.GetActiveScene().buildIndex == 2)
+        {
+            PlayerPrefs.SetString("lastlevel", firstSceneName);
+        }
+        else if (SceneManager.GetActiveScene().buildIndex == 3)
+        {
+            PlayerPrefs.SetString("lastlevel", secondSceneName);
+        }
+        else if (SceneManager.GetActiveScene().buildIndex == 4)
+        {
+            PlayerPrefs.SetString("lastlevel", thirdSceneName);
+        }
         isDead = true;
         DataRecorder.recordDeathPosition3D(transform.position);
     }
@@ -327,7 +345,7 @@ public class PlayerCharacterController : MonoBehaviour
                 Vector3 horizontalVelocity = Vector3.ProjectOnPlane(characterVelocity, Vector3.up);
                 horizontalVelocity = Vector3.ClampMagnitude(horizontalVelocity, maxSpeedInAir * speedModifier);
                 characterVelocity = horizontalVelocity + (Vector3.up * verticalVelocity);
-
+               // */
                 // apply the gravity to the velocity
                 characterVelocity += Vector3.down * gravityDownForce * Time.deltaTime;
             }

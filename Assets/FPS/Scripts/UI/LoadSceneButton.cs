@@ -8,15 +8,23 @@ public class LoadSceneButton : MonoBehaviour
 
     private void Update()
     {
-        if(EventSystem.current.currentSelectedGameObject == gameObject 
+        string lastlevel = PlayerPrefs.GetString("lastlevel");
+
+        if (EventSystem.current.currentSelectedGameObject == gameObject 
             && Input.GetButtonDown(GameConstants.k_ButtonNameSubmit))
         {
             LoadTargetScene();
+            LoadLastScene();
         }
     }
 
     public void LoadTargetScene()
     {
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void LoadLastScene()
+    {
+        SceneManager.LoadScene(PlayerPrefs.GetString("lastlevel"));
     }
 }

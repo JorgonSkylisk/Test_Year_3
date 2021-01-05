@@ -13,6 +13,7 @@ public class GameFlowManager : MonoBehaviour
     [Tooltip("This string has to be the name of the scene you want to load when winning")]
     public string winSceneName = "WinScene";
     public string secondSceneName = "SecondaryScene";
+    public string thirdSceneName = "TertiaryScene";
     [Tooltip("Duration of delay before the fade-to-black, if winning")]
     public float delayBeforeFadeToBlack = 4f;
     [Tooltip("Duration of delay before the win message")]
@@ -91,6 +92,10 @@ public class GameFlowManager : MonoBehaviour
             {
                 m_SceneToLoad = secondSceneName;
             }
+            else if (SceneManager.GetActiveScene().buildIndex == 3)
+            {
+                m_SceneToLoad = thirdSceneName;
+            }
             else
             {
                 m_SceneToLoad = winSceneName;
@@ -115,6 +120,7 @@ public class GameFlowManager : MonoBehaviour
         }
         else
         {
+
             m_SceneToLoad = loseSceneName;
             m_TimeLoadEndGameScene = Time.time + endSceneLoadDelay;
         }
