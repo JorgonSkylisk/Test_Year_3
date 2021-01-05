@@ -18,7 +18,7 @@ public class Heatmap_BombDrop : MonoBehaviour
 
     }
 
-    //[MenuItem("Tools/Heatmap/Generate")]
+    [MenuItem("Tools/Heatmap/Generate")]
     static void ReadDeathData()
     {
         m_deathPositions.Clear();
@@ -82,7 +82,7 @@ public class Heatmap_BombDrop : MonoBehaviour
         }
     }
 
-    //[MenuItem("Tools/Heatmap/Clear")]
+    [MenuItem("Tools/Heatmap/Clear")]
     public static void destroyHeatmapObjects()
     {
             GameObject[] hMap_Spheres = GameObject.FindGameObjectsWithTag("heatmap");
