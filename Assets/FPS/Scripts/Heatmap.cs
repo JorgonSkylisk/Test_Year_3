@@ -18,7 +18,7 @@ public class Heatmap_BombDrop : MonoBehaviour
 
     }
 
-    [MenuItem("Tools/Heatmap/Generate")]
+    [MenuItem("Tools/Heatmap/DeathGenerate")]
     static void ReadDeathData()
     {
         m_deathPositions.Clear();
@@ -37,6 +37,7 @@ public class Heatmap_BombDrop : MonoBehaviour
        renderDeathData();
     }
 
+    [MenuItem("Tools/Heatmap/PickupGenerate")]
     static void ReadPickupData()
     {
         m_pickupPositions.Clear();
