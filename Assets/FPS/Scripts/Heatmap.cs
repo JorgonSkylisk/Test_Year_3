@@ -37,7 +37,7 @@ public class Heatmap_BombDrop : MonoBehaviour
        renderDeathData();
     }
 
-    //[MenuItem("Tools/Heatmap/PickupGenerate")]
+    [MenuItem("Tools/Heatmap/PickupGenerate")]
     static void ReadPickupData()
     {
         m_pickupPositions.Clear();
@@ -83,7 +83,7 @@ public class Heatmap_BombDrop : MonoBehaviour
         }
     }
 
-    //[MenuItem("Tools/Heatmap/Clear")]
+    [MenuItem("Tools/Heatmap/Clear")]
     public static void destroyHeatmapObjects()
     {
             GameObject[] hMap_Spheres = GameObject.FindGameObjectsWithTag("heatmap");
