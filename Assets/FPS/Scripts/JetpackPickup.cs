@@ -22,7 +22,7 @@ public class JetpackPickup : MonoBehaviour
         if (jetpack.TryUnlock())
         {
             m_Pickup.PlayPickupFeedback();
-
+            DataRecorder.recordPickupPosition3D(transform.position);
             Destroy(gameObject);
         }
     }

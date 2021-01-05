@@ -38,7 +38,7 @@ public class WeaponPickup : MonoBehaviour
                 }
 
                 m_Pickup.PlayPickupFeedback();
-
+                DataRecorder.recordPickupPosition3D(transform.position);
                 Destroy(gameObject);
             }
         }

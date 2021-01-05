@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class Heatmap_BombDrop : MonoBehaviour
 {
     private static List<Vector3> m_deathPositions = new List<Vector3>();
+    private static List<Vector3> m_pickupPositions = new List<Vector3>();
     private static GameObject heatmapPrefab;
     private static string m_path = "Assets/Resources/Text/";
 
@@ -36,7 +37,25 @@ public class Heatmap_BombDrop : MonoBehaviour
        renderDeathData();
     }
 
-    
+    static void ReadPickupData()
+    {
+        m_pickupPositions.Clear();
+        string filePath = m_path + SceneManager.GetActiveScene().name; //Creates and uses a file per scence. This application uses your scene name to generate death textfile. 
+        heatmapPrefab = (GameObject)Resources.Load("prefabs/pickupPrefab", typeof(GameObject));//Prefab to use to render death positions.
+
+        //Read the text from directly from the txt file
+        string fullPath = filePath + "_Pickup.txt";
+        StreamReader reader = new StreamReader(fullPath);
+        string pickupCoords = "";
+        while ((pickupCoords = reader.ReadLine()) != null)
+        {//going through the text file line by line and adding it to a list of vectors.
+            m_pickupPositions.Add(stringToVec(pickupCoords));
+            pickupCoords = "";
+        }
+        reader.Close();
+        renderPickupData();
+    }
+
     public static Vector3 stringToVec(string _st)
     {
         Vector3 result = new Vector3();
@@ -52,6 +71,14 @@ public class Heatmap_BombDrop : MonoBehaviour
     {
         foreach (Vector3 deathPos in m_deathPositions) {
             Instantiate(heatmapPrefab, deathPos, Quaternion.identity);
+        }
+    }
+
+    public static void renderPickupData()
+    {
+        foreach (Vector3 pickupPos in m_pickupPositions)
+        {
+            Instantiate(heatmapPrefab, pickupPos, Quaternion.identity);
         }
     }
 

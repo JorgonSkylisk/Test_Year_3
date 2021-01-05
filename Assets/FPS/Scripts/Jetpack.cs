@@ -21,7 +21,7 @@ public class Jetpack : MonoBehaviour
 
     [Header("Durations")]
     [Tooltip("Time it takes to consume all the jetpack fuel")]
-    public float consumeDuration = 1.5f;
+    public float consumeDuration = 2.5f;
     [Tooltip("Time it takes to completely refill the jetpack while on the ground")]
     public float refillDurationGrounded = 2f;
     [Tooltip("Time it takes to completely refill the jetpack while in the air")]

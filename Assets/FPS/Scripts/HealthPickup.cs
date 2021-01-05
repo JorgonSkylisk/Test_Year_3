@@ -25,7 +25,7 @@ public class HealthPickup : MonoBehaviour
             playerHealth.Heal(healAmount);
 
             m_Pickup.PlayPickupFeedback();
-
+            DataRecorder.recordPickupPosition3D(transform.position);
             Destroy(gameObject);
         }
     }
