@@ -123,6 +123,10 @@ public class PlayerCharacterController : MonoBehaviour
     public string firstSceneName = "MainScene";
     public string secondSceneName = "SecondaryScene";
     public string thirdSceneName = "TertiaryScene";
+    public bool inZeroGrav;
+    public string zeroGravTag = "";
+    public float regGravityDownForce = 20f;
+    public float noGravityDownForce = 0f;
 
     void Start()
     {
@@ -270,6 +274,15 @@ public class PlayerCharacterController : MonoBehaviour
 
             // apply the vertical angle as a local rotation to the camera transform along its right axis (makes it pivot up and down)
             playerCamera.transform.localEulerAngles = new Vector3(m_CameraVerticalAngle, 0, 0);
+        }
+
+        if (inZeroGrav == true)
+        {
+            gravityDownForce = noGravityDownForce;
+        }
+        else
+        {
+            gravityDownForce = regGravityDownForce;
         }
 
         // character movement handling
@@ -451,5 +464,21 @@ public class PlayerCharacterController : MonoBehaviour
 
         isCrouching = crouched;
         return true;
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        if(col.gameObject.tag == zeroGravTag)
+        {
+            inZeroGrav = true;
+        }
+    }
+
+    void OnTriggerExit(Collider col)
+    {
+        if (col.gameObject.tag == zeroGravTag)
+        {
+            inZeroGrav = false;
+        }
     }
 }

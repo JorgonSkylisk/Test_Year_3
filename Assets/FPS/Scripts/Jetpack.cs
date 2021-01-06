@@ -69,13 +69,14 @@ public class Jetpack : MonoBehaviour
         {
             m_CanUseJetpack = false;
         }
-        else if (!m_PlayerCharacterController.hasJumpedThisFrame && m_InputHandler.GetJumpInputDown())
+        else if (!m_PlayerCharacterController.hasJumpedThisFrame && m_InputHandler.GetJumpInputDown() || m_InputHandler.GetBoostInputHeld())
         {
             m_CanUseJetpack = true;
         }
 
         // jetpack usage
-        bool jetpackIsInUse = m_CanUseJetpack && isJetpackUnlocked  && currentFillRatio > 0f && m_InputHandler.GetJumpInputHeld();
+        bool jetpackIsInUse = m_CanUseJetpack && isJetpackUnlocked  && currentFillRatio > 0f && (m_InputHandler.GetJumpInputHeld());
+        bool jetpackDIsInUse = m_CanUseJetpack && isJetpackUnlocked && currentFillRatio > 0f && (m_InputHandler.GetBoostInputHeld());
         if(jetpackIsInUse)
         {
             // store the last time of use for refill delay
@@ -94,6 +95,37 @@ public class Jetpack : MonoBehaviour
 
             // apply the acceleration to character's velocity
             m_PlayerCharacterController.characterVelocity += Vector3.up * totalAcceleration * Time.deltaTime;
+
+            // consume fuel
+            currentFillRatio = currentFillRatio - (Time.deltaTime / consumeDuration);
+
+            for (int i = 0; i < jetpackVfx.Length; i++)
+            {
+                var emissionModulesVFX = jetpackVfx[i].emission;
+                emissionModulesVFX.enabled = true;
+            }
+
+            if (!audioSource.isPlaying)
+                audioSource.Play();
+        }
+        else if (jetpackDIsInUse)
+        {
+            // store the last time of use for refill delay
+            m_LastTimeOfUse = Time.time;
+
+            float totalDAcceleration = -jetpackAcceleration;
+
+            // cancel out gravity
+            totalDAcceleration += m_PlayerCharacterController.gravityDownForce;
+
+            if (m_PlayerCharacterController.characterVelocity.y > 0f)
+            {
+                // handle making the jetpack compensate for character's downward velocity with bonus acceleration
+                totalDAcceleration += ((-m_PlayerCharacterController.characterVelocity.y / Time.deltaTime) * jetpackDownwardVelocityCancelingFactor);
+            }
+
+            // apply the acceleration to character's velocity
+            m_PlayerCharacterController.characterVelocity += Vector3.up * totalDAcceleration * Time.deltaTime;
 
             // consume fuel
             currentFillRatio = currentFillRatio - (Time.deltaTime / consumeDuration);

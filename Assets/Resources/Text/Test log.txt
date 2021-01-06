@@ -1,0 +1,72 @@
+Fix respawn to make you respawn on the same level you died
+Fix shotgun enemy hitbox (FixeD)
+Make melee/exploding enemy (NO)
+Bigger more open levels for arena combat (Done)
+Enemy spawn triggers
+Slightly more jetpack fuel? (Done)
+Health drop increase (Done)
+
+First test Results:
+
+First Level:
+2 total deaths in first level: 
+All In First room (Move the turret to be more of a visible threat)
+
+Completion time of an average = 85.36 seconds Little shorter than expected
+
+Second Level:
+14 total deaths in second level:
+3 In first Area (All on right side after exiting spawn)
+7 in Second Area (One due to fall damage, Reduce regular enemy amount)
+4 in Final Area (Make balcony solid)
+
+Completion time of an average = 136.33 seconds
+
+
+Second test Results:
+
+First Level:
+No total deaths in first level: 
+
+Pickups obviously spawning off of defeated enemies way too much, none touched in boss room, shotgun not sign posted enough?
+
+Completion time of an average = 85.36 seconds Little shorter than expected
+
+Second Level:
+No Deaths
+
+Pickups obviously spawning off of defeated enemies way too much, none touched in boss room
+
+Completion time of an average = 136.33 seconds
+
+Third Level:
+Only 1 Death in the first room
+
+
+Pickups obviously spawning off of defeated enemies way too much, almost none of the pre placed pick ups in boss room
+
+Completion time of an average =
+
+
+Third test Results:
+
+One total deaths in first level: First room
+
+Hit a nice balance on the drops here
+
+Completion time of an average = 85.36 seconds Little shorter than expected
+
+Second Level:
+6 Deaths in total: 2 in each encounter (Seems about right)
+
+Hit a nice balance on the drops here, though still few are touched in boss room
+
+Completion time of an average = 136.33 seconds
+
+Third Level:
+Only 2 Deaths: 1 in the first room, One in the Courtyard (Again Just about right)
+
+
+With the better balance and less drops we can maybe turn off the garaunteed drops from the turrets
+
+Completion time of an average =

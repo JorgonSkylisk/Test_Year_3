@@ -65,7 +65,7 @@ public class Dash : MonoBehaviour
         */
         m_CanUseDash = true;
         // Dash usage
-        bool DashIsInUse = m_CanUseDash && currentFillRatio > 0f && m_InputHandler.GetSprintInputHeld();
+        bool DashIsInUse = m_CanUseDash && currentFillRatio > 0f && m_InputHandler.GetDashInputDown();
         if (DashIsInUse)
         {
             // store the last time of use for refill delay
@@ -74,7 +74,7 @@ public class Dash : MonoBehaviour
             float totalAcceleration = DashAcceleration;
 
             // cancel out gravity
-            totalAcceleration += m_PlayerCharacterController.gravityDownForce;
+            //totalAcceleration += m_PlayerCharacterController.gravityDownForce;
 
             //if (m_PlayerCharacterController.characterVelocity.y < 0f)
             

@@ -133,11 +133,31 @@ public class PlayerInputHandler : MonoBehaviour
         return false;
     }
 
+    public bool GetDashInputDown()
+    {
+        if (CanProcessInput())
+        {
+            return Input.GetButton(GameConstants.k_ButtonNameCrouch);
+        }
+
+        return false;
+    }
+
     public bool GetCrouchInputDown()
     {
         if (CanProcessInput())
         {
             return Input.GetButtonDown(GameConstants.k_ButtonNameCrouch);
+        }
+
+        return false;
+    }
+
+    public bool GetBoostInputHeld()
+    {
+        if (CanProcessInput())
+        {
+            return Input.GetButton(GameConstants.k_ButtonNameBoost);
         }
 
         return false;

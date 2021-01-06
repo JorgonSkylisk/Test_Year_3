@@ -12,6 +12,8 @@
     public const string k_ButtonNameGamepadFire             = "Gamepad Fire";
     public const string k_ButtonNameSprint                  = "Sprint";
     public const string k_ButtonNameCrouch                  = "Crouch";
+    public const string k_ButtonNameDash                    = "Dash";
+    public const string k_ButtonNameBoost                   = "Boost";
     public const string k_ButtonNameAim                     = "Aim";
     public const string k_ButtonNameGamepadAim              = "Gamepad Aim";
     public const string k_ButtonNameSwitchWeapon            = "Mouse ScrollWheel";
