@@ -86,7 +86,7 @@ MonoBehaviour:
   continuousShootStartSFX: {fileID: 0}
   continuousShootLoopSFX: {fileID: 0}
   continuousShootEndSFX: {fileID: 0}
-  knockbackAmount: 50
+  knockbackAmount: 30
 --- !u!114 &1284412032582177879
 MonoBehaviour:
   m_ObjectHideFlags: 0
