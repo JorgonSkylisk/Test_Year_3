@@ -65,7 +65,7 @@ public class Dash : MonoBehaviour
         */
         m_CanUseDash = true;
         // Dash usage
-        bool DashIsInUse = currentFillRatio > 0f && m_InputHandler.GetDashInputDown();
+        bool DashIsInUse = currentFillRatio > 0f && m_InputHandler.GetSprintInputHeld();
         if (DashIsInUse)
         {
             // store the last time of use for refill delay
@@ -79,13 +79,13 @@ public class Dash : MonoBehaviour
             //totalAcceleration += m_PlayerCharacterController.gravityDownForce;
 
             //if (m_PlayerCharacterController.characterVelocity.y != 0f)
-            
-                // handle making the Dash compensate for character's downward velocity with bonus acceleration
-                //totalAcceleration += ((-m_PlayerCharacterController.characterVelocity.y / Time.deltaTime) * DashDownwardVelocityCancelingFactor);
-            
+
+            // handle making the Dash compensate for character's downward velocity with bonus acceleration
+            //totalAcceleration += ((-m_PlayerCharacterController.characterVelocity.x / Time.deltaTime) * DashDownwardVelocityCancelingFactor);
+
 
             // apply the acceleration to character's velocity
-            m_PlayerCharacterController.characterVelocity += new Vector3(m_PlayerCharacterController.characterVelocity.x, m_PlayerCharacterController.characterVelocity.y, m_PlayerCharacterController.characterVelocity.z) * totalAcceleration * Time.deltaTime;
+            m_PlayerCharacterController.sprintSpeedModifier = totalAcceleration;
 
             // consume fuel
             currentFillRatio = currentFillRatio - (Time.deltaTime / consumeDuration);
@@ -108,7 +108,7 @@ public class Dash : MonoBehaviour
 
         if(dashTime == 0.25f)
         {
-            m_PlayerCharacterController.characterVelocity = new Vector3(0, 0, 0);
+            //m_PlayerCharacterController.characterVelocity = new Vector3(0, 0, 0);
             DashIsInUse = false;
         }
 
@@ -118,6 +118,7 @@ public class Dash : MonoBehaviour
     {
 
         yield return new WaitForSecondsRealtime(0.25f);
+        m_PlayerCharacterController.sprintSpeedModifier = 1f;
 
         m_PlayerCharacterController.characterVelocity = new Vector3(0, 0, 0);
 

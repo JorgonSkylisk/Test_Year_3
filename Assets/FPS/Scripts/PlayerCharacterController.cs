@@ -361,7 +361,7 @@ public class PlayerCharacterController : MonoBehaviour
                 Vector3 targetVelocity = worldspaceMoveInput * maxSpeedOnGround * speedModifier;
 
                 // add air acceleration
-                characterVelocity += worldspaceMoveInput * accelerationSpeedInAir * Time.deltaTime;
+                //characterVelocity += worldspaceMoveInput * accelerationSpeedInAir * Time.deltaTime;
 
                 // limit air speed to a maximum, but only horizontally
                 //float verticalVelocity = characterVelocity.y;
