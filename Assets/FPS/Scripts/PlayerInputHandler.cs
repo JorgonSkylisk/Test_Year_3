@@ -137,7 +137,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (CanProcessInput())
         {
-            return Input.GetButton(GameConstants.k_ButtonNameCrouch);
+            return Input.GetButtonDown(GameConstants.k_ButtonNameDash);
         }
 
         return false;

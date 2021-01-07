@@ -71,12 +71,14 @@ public class Dash : MonoBehaviour
             // store the last time of use for refill delay
             m_LastTimeOfUse = Time.time;
 
+            StartCoroutine(wait_Dash());
+
             float totalAcceleration = DashAcceleration;
 
             // cancel out gravity
             //totalAcceleration += m_PlayerCharacterController.gravityDownForce;
 
-            //if (m_PlayerCharacterController.characterVelocity.y < 0f)
+            //if (m_PlayerCharacterController.characterVelocity.y != 0f)
             
                 // handle making the Dash compensate for character's downward velocity with bonus acceleration
                 //totalAcceleration += ((-m_PlayerCharacterController.characterVelocity.y / Time.deltaTime) * DashDownwardVelocityCancelingFactor);
@@ -112,4 +114,11 @@ public class Dash : MonoBehaviour
 
     }
 
+    IEnumerator wait_Dash()
+    {
+
+
+        yield return new WaitForSecondsRealtime(1);
+
+    }
 }
