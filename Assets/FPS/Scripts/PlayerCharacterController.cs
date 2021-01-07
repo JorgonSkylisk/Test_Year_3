@@ -25,6 +25,8 @@ public class PlayerCharacterController : MonoBehaviour
     public float maxSpeedOnGround = 10f;
     [Tooltip("Sharpness for the movement when grounded, a low value will make the player accelerate and decelerate slowly, a high value will do the opposite")]
     public float movementSharpnessOnGround = 15;
+    [Tooltip("Sharpness for the movement when in air, a low value will make the player accelerate and decelerate slowly, a high value will do the opposite")]
+    public float movementSharpnessInAir = 50;
     [Tooltip("Max movement speed when crouching")]
     [Range(0,1)]
     public float maxSpeedCrouchedRatio = 0.5f;
@@ -127,6 +129,7 @@ public class PlayerCharacterController : MonoBehaviour
     public string zeroGravTag = "";
     public float regGravityDownForce = 20f;
     public float noGravityDownForce = 0f;
+    bool isMoving = false;
 
     void Start()
     {
@@ -150,6 +153,8 @@ public class PlayerCharacterController : MonoBehaviour
 
         m_Health.onDie += OnDie;
 
+
+
         // force the crouch state to false when starting
         SetCrouchingState(false, true);
         UpdateCharacterHeight(true);
@@ -162,7 +167,6 @@ public class PlayerCharacterController : MonoBehaviour
         {
             m_Health.Kill();
         }
-
         hasJumpedThisFrame = false;
 
         bool wasGrounded = isGrounded;
@@ -276,6 +280,7 @@ public class PlayerCharacterController : MonoBehaviour
             playerCamera.transform.localEulerAngles = new Vector3(m_CameraVerticalAngle, 0, 0);
         }
 
+
         if (inZeroGrav == true)
         {
             gravityDownForce = noGravityDownForce;
@@ -288,6 +293,7 @@ public class PlayerCharacterController : MonoBehaviour
         // character movement handling
         bool isSprinting = m_InputHandler.GetSprintInputHeld();
         {
+
             if (isSprinting)
             {
                 isSprinting = SetCrouchingState(false, false);
@@ -297,6 +303,13 @@ public class PlayerCharacterController : MonoBehaviour
 
             // converts move input to a worldspace vector based on our character's transform orientation
             Vector3 worldspaceMoveInput = transform.TransformVector(m_InputHandler.GetMoveInput());
+            if (worldspaceMoveInput == new Vector3Int(0, 0, 0))
+            {
+                //Debug.Log("No movement");
+                isMoving = true;
+            }
+                 
+            
 
             // handle grounded movement
             if (isGrounded)
@@ -350,6 +363,8 @@ public class PlayerCharacterController : MonoBehaviour
             // handle air movement
             else
             {
+                Vector3 targetVelocity = worldspaceMoveInput * maxSpeedOnGround * speedModifier;
+
                 // add air acceleration
                 characterVelocity += worldspaceMoveInput * accelerationSpeedInAir * Time.deltaTime;
 
@@ -357,8 +372,10 @@ public class PlayerCharacterController : MonoBehaviour
                 float verticalVelocity = characterVelocity.y;
                 Vector3 horizontalVelocity = Vector3.ProjectOnPlane(characterVelocity, Vector3.up);
                 horizontalVelocity = Vector3.ClampMagnitude(horizontalVelocity, maxSpeedInAir * speedModifier);
-                characterVelocity = horizontalVelocity + (Vector3.up * verticalVelocity);
-               // */
+                characterVelocity = Vector3.Lerp(horizontalVelocity + (Vector3.up * verticalVelocity), new Vector3(targetVelocity.x, characterVelocity.y, targetVelocity.z), movementSharpnessInAir * Time.deltaTime);
+
+
+                // */
                 // apply the gravity to the velocity
                 characterVelocity += Vector3.down * gravityDownForce * Time.deltaTime;
             }
@@ -368,6 +385,7 @@ public class PlayerCharacterController : MonoBehaviour
         Vector3 capsuleBottomBeforeMove = GetCapsuleBottomHemisphere();
         Vector3 capsuleTopBeforeMove = GetCapsuleTopHemisphere(m_Controller.height);
         m_Controller.Move(characterVelocity * Time.deltaTime);
+
 
         // detect obstructions to adjust velocity accordingly
         m_LatestImpactSpeed = Vector3.zero;

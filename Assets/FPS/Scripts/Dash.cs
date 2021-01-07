@@ -117,8 +117,9 @@ public class Dash : MonoBehaviour
     IEnumerator wait_Dash()
     {
 
+        yield return new WaitForSecondsRealtime(0.25f);
 
-        yield return new WaitForSecondsRealtime(1);
+        m_PlayerCharacterController.characterVelocity = new Vector3(0, 0, 0);
 
     }
 }
