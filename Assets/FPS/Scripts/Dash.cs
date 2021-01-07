@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class Dash : MonoBehaviour
 {
-    [Tooltip("The strength with which the Dash pushes the player up")]
+    [Tooltip("The strength with which the Dash pushes the player")]
     public float DashAcceleration = 7f;
     [Range(0f, 1f)]
     [Tooltip("This will affect how much using the Dash will cancel the gravity value, to start going up faster. 0 is not at all, 1 is instant")]
@@ -65,7 +65,7 @@ public class Dash : MonoBehaviour
         */
         m_CanUseDash = true;
         // Dash usage
-        bool DashIsInUse = m_CanUseDash && currentFillRatio > 0f && m_InputHandler.GetDashInputDown();
+        bool DashIsInUse = currentFillRatio > 0f && m_InputHandler.GetDashInputDown();
         if (DashIsInUse)
         {
             // store the last time of use for refill delay
@@ -85,7 +85,7 @@ public class Dash : MonoBehaviour
             
 
             // apply the acceleration to character's velocity
-            m_PlayerCharacterController.characterVelocity += new Vector3(m_PlayerCharacterController.characterVelocity.x, 0, m_PlayerCharacterController.characterVelocity.z) * totalAcceleration * Time.deltaTime;
+            m_PlayerCharacterController.characterVelocity += new Vector3(m_PlayerCharacterController.characterVelocity.x, m_PlayerCharacterController.characterVelocity.y, m_PlayerCharacterController.characterVelocity.z) * totalAcceleration * Time.deltaTime;
 
             // consume fuel
             currentFillRatio = currentFillRatio - (Time.deltaTime / consumeDuration);
