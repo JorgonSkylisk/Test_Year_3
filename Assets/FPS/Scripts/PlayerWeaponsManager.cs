@@ -79,6 +79,7 @@ public class PlayerWeaponsManager : MonoBehaviour
     float m_TimeStartedWeaponSwitch;
     WeaponSwitchState m_WeaponSwitchState;
     int m_WeaponSwitchNewWeaponIndex;
+    float knockBack;
 
 
 
@@ -92,6 +93,8 @@ public class PlayerWeaponsManager : MonoBehaviour
 
         m_PlayerCharacterController = GetComponent<PlayerCharacterController>();
         DebugUtility.HandleErrorIfNullGetComponent<PlayerCharacterController, PlayerWeaponsManager>(m_PlayerCharacterController, this, gameObject);
+
+        weaponController = GetComponent<WeaponController>();
 
         SetFOV(defaultFOV);
 
@@ -109,6 +112,7 @@ public class PlayerWeaponsManager : MonoBehaviour
     {
         // shoot handling
         WeaponController activeWeapon = GetActiveWeapon();
+        knockBack = activeWeapon.knockbackAmount;
 
         if (activeWeapon && m_WeaponSwitchState == WeaponSwitchState.Up)
         {
@@ -124,7 +128,7 @@ public class PlayerWeaponsManager : MonoBehaviour
             // Handle accumulating recoil
             if (hasFired)
             {
-                m_PlayerCharacterController.Knockback(10);
+                m_PlayerCharacterController.Knockback(knockBack);
                 m_AccumulatedRecoil += Vector3.back * activeWeapon.recoilForce;
                 m_AccumulatedRecoil = Vector3.ClampMagnitude(m_AccumulatedRecoil, maxRecoilDistance);
             }

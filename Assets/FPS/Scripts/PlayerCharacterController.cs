@@ -364,10 +364,10 @@ public class PlayerCharacterController : MonoBehaviour
                 characterVelocity += worldspaceMoveInput * accelerationSpeedInAir * Time.deltaTime;
 
                 // limit air speed to a maximum, but only horizontally
-                float verticalVelocity = characterVelocity.y;
-                Vector3 horizontalVelocity = Vector3.ProjectOnPlane(characterVelocity, Vector3.up);
-                horizontalVelocity = Vector3.ClampMagnitude(horizontalVelocity, maxSpeedInAir * speedModifier);
-                characterVelocity = Vector3.Lerp(horizontalVelocity + (Vector3.up * verticalVelocity), new Vector3(targetVelocity.x, 0f, targetVelocity.z), movementSharpnessInAir * Time.deltaTime);
+                //float verticalVelocity = characterVelocity.y;
+                Vector3 limitedVelocity = characterVelocity;
+                limitedVelocity = Vector3.ClampMagnitude(limitedVelocity, maxSpeedInAir * speedModifier);
+                characterVelocity = Vector3.Lerp(limitedVelocity, targetVelocity, movementSharpnessInAir * Time.deltaTime);
 
 
                 // */
