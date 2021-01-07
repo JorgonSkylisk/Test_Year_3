@@ -129,7 +129,6 @@ public class PlayerCharacterController : MonoBehaviour
     public string zeroGravTag = "";
     public float regGravityDownForce = 20f;
     public float noGravityDownForce = 0f;
-    bool isMoving = false;
 
     void Start()
     {
@@ -303,11 +302,7 @@ public class PlayerCharacterController : MonoBehaviour
 
             // converts move input to a worldspace vector based on our character's transform orientation
             Vector3 worldspaceMoveInput = transform.TransformVector(m_InputHandler.GetMoveInput());
-            if (worldspaceMoveInput == new Vector3Int(0, 0, 0))
-            {
-                //Debug.Log("No movement");
-                isMoving = true;
-            }
+
                  
             
 
@@ -372,7 +367,7 @@ public class PlayerCharacterController : MonoBehaviour
                 float verticalVelocity = characterVelocity.y;
                 Vector3 horizontalVelocity = Vector3.ProjectOnPlane(characterVelocity, Vector3.up);
                 horizontalVelocity = Vector3.ClampMagnitude(horizontalVelocity, maxSpeedInAir * speedModifier);
-                characterVelocity = Vector3.Lerp(horizontalVelocity + (Vector3.up * verticalVelocity), new Vector3(targetVelocity.x, characterVelocity.y, targetVelocity.z), movementSharpnessInAir * Time.deltaTime);
+                characterVelocity = Vector3.Lerp(horizontalVelocity + (Vector3.up * verticalVelocity), new Vector3(targetVelocity.x, 0f, targetVelocity.z), movementSharpnessInAir * Time.deltaTime);
 
 
                 // */
@@ -499,4 +494,10 @@ public class PlayerCharacterController : MonoBehaviour
             inZeroGrav = false;
         }
     }
+
+    public void Knockback(float amount)
+    {
+        characterVelocity += (playerCamera.transform.forward * -amount);
+    }
+
 }

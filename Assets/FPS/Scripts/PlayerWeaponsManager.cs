@@ -67,6 +67,7 @@ public class PlayerWeaponsManager : MonoBehaviour
     public UnityAction<WeaponController, int> onRemovedWeapon;
 
     WeaponController[] m_WeaponSlots = new WeaponController[9]; // 9 available weapon slots
+    WeaponController weaponController;
     PlayerInputHandler m_InputHandler;
     PlayerCharacterController m_PlayerCharacterController;
     float m_WeaponBobFactor;
@@ -78,6 +79,8 @@ public class PlayerWeaponsManager : MonoBehaviour
     float m_TimeStartedWeaponSwitch;
     WeaponSwitchState m_WeaponSwitchState;
     int m_WeaponSwitchNewWeaponIndex;
+
+
 
     private void Start()
     {
@@ -121,6 +124,7 @@ public class PlayerWeaponsManager : MonoBehaviour
             // Handle accumulating recoil
             if (hasFired)
             {
+                m_PlayerCharacterController.Knockback(10);
                 m_AccumulatedRecoil += Vector3.back * activeWeapon.recoilForce;
                 m_AccumulatedRecoil = Vector3.ClampMagnitude(m_AccumulatedRecoil, maxRecoilDistance);
             }
